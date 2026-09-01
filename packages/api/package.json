@@ -1,0 +1,27 @@
+{
+  "name": "@ithaka/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/app.ts"
+  },
+  "scripts": {
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.864.0",
+    "@aws-sdk/s3-request-presigner": "^3.864.0",
+    "@better-auth/expo": "^1.3.7",
+    "@hono/node-server": "^1.19.1",
+    "@ithaka/db": "*",
+    "@ithaka/shared": "*",
+    "better-auth": "^1.3.7",
+    "hono": "^4.9.6",
+    "nanoid": "^5.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}

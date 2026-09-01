@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ithaka
+      POSTGRES_PASSWORD: ithaka
+      POSTGRES_DB: ithaka
+    ports:
+      - "5432:5432"
+    volumes:
+      - ithaka_pg:/var/lib/postgresql/data
+
+volumes:
+  ithaka_pg:

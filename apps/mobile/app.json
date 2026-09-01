@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Ithaka",
+    "slug": "ithaka",
+    "scheme": "ithaka",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ithaka.app"
+    },
+    "android": {
+      "package": "com.ithaka.app"
+    }
+  }
+}

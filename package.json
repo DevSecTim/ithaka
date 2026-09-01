@@ -1,0 +1,29 @@
+{
+  "name": "ithaka",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A shared travel map and scrapbook for your circle.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=@ithaka/web --filter=@ithaka/api",
+    "dev:mobile": "turbo dev --filter=@ithaka/mobile --filter=@ithaka/api",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "db:generate": "npm run generate -w @ithaka/db",
+    "db:migrate": "npm run migrate -w @ithaka/db",
+    "db:push": "npm run push -w @ithaka/db",
+    "db:studio": "npm run studio -w @ithaka/db"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@11.17.0"
+}
