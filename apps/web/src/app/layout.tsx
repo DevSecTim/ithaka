@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     "A shared world map of wishes and memories. Wishlist pins are dreams; visited pins open a scrapbook.",
 };
 
+// Force dynamic rendering to avoid build-time React context issues
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

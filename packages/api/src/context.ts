@@ -20,17 +20,34 @@ export type AppEnv = {
 };
 
 export const requireUser = createMiddleware<AppEnv>(async (c, next) => {
-  const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  if (!session?.user) {
+  try {
+    const session = await auth.api.getSession({ headers: c.req.raw.headers });
+    
+    if (!session) {
+      console.error("[Auth] No session found in request");
+      throw new HTTPException(401, { message: "Sign in to continue" });
+    }
+    
+    if (!session.user) {
+      console.error("[Auth] Session exists but no user attached:", session);
+      throw new HTTPException(401, { message: "Sign in to continue" });
+    }
+    
+    c.set("user", {
+      id: session.user.id,
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user.image,
+    });
+    
+    await next();
+  } catch (error) {
+    if (error instanceof HTTPException) {
+      throw error;
+    }
+    console.error("[Auth] Session validation error:", error);
     throw new HTTPException(401, { message: "Sign in to continue" });
   }
-  c.set("user", {
-    id: session.user.id,
-    name: session.user.name,
-    email: session.user.email,
-    image: session.user.image,
-  });
-  await next();
 });
 
 export async function requireMembership(userId: string, circleId: string) {
