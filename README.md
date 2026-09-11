@@ -42,11 +42,13 @@ cp .env.example .env
 
 docker compose up -d
 npm install
-npm run db:push
+npm run db:migrate
 npm run dev:web
 ```
 
 Open [http://localhost:3000](http://localhost:3000). The web app mounts the API at `/api`. The standalone API (for Expo) is [http://localhost:3001](http://localhost:3001) when `apps/api` is running.
+
+> **Note**: The project now uses Drizzle migrations for production-safe schema management. After schema changes, run `npm run db:generate` to create a migration. For development-only schema syncing, you can use `npm run db:push` (not recommended for production).
 
 ```bash
 npm run dev          # web + api
