@@ -4,6 +4,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 const webUrl = process.env.WEB_URL ?? process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL ?? webUrl,
@@ -27,6 +28,13 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 60 * 5,
+    },
+  },
+  advanced: {
+    // Disable secure cookies in development (localhost uses http://)
+    useSecureCookies: !isDevelopment,
+    defaultCookieAttributes: {
+      sameSite: "lax",
     },
   },
 });

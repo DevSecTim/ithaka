@@ -33,8 +33,8 @@ export function validateEnv(): Env {
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("❌ Environment validation failed:");
-      error.errors.forEach((err) => {
-        console.error(`  - ${err.path.join(".")}: ${err.message}`);
+      error.issues.forEach((issue) => {
+        console.error(`  - ${issue.path.join(".")}: ${issue.message}`);
       });
       console.error("\nPlease check your .env file and ensure all required variables are set.");
       process.exit(1);

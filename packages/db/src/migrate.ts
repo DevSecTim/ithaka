@@ -15,6 +15,11 @@ if (!url) {
 async function runMigrations() {
   console.log("Running database migrations...");
   
+  if (!url) {
+    console.error("❌ DATABASE_URL is not set");
+    process.exit(1);
+  }
+  
   const client = postgres(url, { max: 1 });
   const db = drizzle(client);
   
