@@ -45,35 +45,41 @@ Successfully implemented P0 and P1 items from the Ithaka assessment plan with **
 
 ## 🧪 Local Verification Required
 
-### Auth Smoke Test
-**User must verify locally (requires Docker):**
+### Auth Smoke Test ✅ **VERIFIED SUCCESSFULLY**
+**Local verification on Tim's Mac (Docker + npm run dev:web) PASSED:**
 
 ```bash
-# 1. Start services
+# Setup completed successfully
 docker compose up -d
-
-# 2. Run migrations  
-npm run db:migrate
-
-# 3. Start dev server
+npm run db:migrate  # Fixed: now works with ESM
 npm run dev:web
 
-# 4. Test in browser at http://localhost:3000
-#    - Signup (should work)
-#    - Login (SHOULD NOW WORK - was broken before)
-#    - Create circle (SHOULD NOW WORK - got 401 before)
-#    - Drop pin (SHOULD NOW WORK - got 401 before)
-#    - Upload photo (optional, if feasible)
+# All smoke tests PASSED ✅
+✅ GET /api/health → 200
+✅ POST /api/auth/sign-up/email → 200 (user created)
+✅ POST /api/auth/sign-in/email → 200 (session cookie set)
+✅ GET /api/auth/get-session → 200 (session valid)
+✅ POST /api/circles → 201 (circle created)
+✅ POST /api/circles/:id/pins → 201 (pin "London" dropped as wishlist)
 ```
 
-**Expected Results:**
-- ✅ Login succeeds (no "Invalid email or password")
-- ✅ Session cookies persist in browser DevTools
-- ✅ Authenticated API calls return 200 (not 401)
-- ✅ Can create circles and drop pins
+**Result:** Auth fix confirmed working. Login succeeds, authenticated routes work, no 401 errors.
 
-**If Issues Persist:**
-See `docs/AUTH_FIX.md` for detailed troubleshooting steps.
+### Migration Fix Applied
+During local testing, discovered `npm run db:migrate` failed with:
+```
+ReferenceError: __dirname is not defined in ES module scope
+```
+
+**Fixed:** Updated `packages/db/src/migrate.ts` to use ESM-compatible `import.meta.url` pattern.  
+**Verified:** Migration now works correctly.
+
+### Remaining Vulnerabilities
+Per `npm audit` on local machine:
+- **Total:** 32 vulnerabilities (0 critical, 9 high, 23 moderate)
+- **Status:** High-severity issues are transitive dependencies (Next.js, React Native/Metro)
+- **Deferred:** Documented in `docs/SECURITY.md` — require major version upgrades
+- **Assessment:** No new critical vulnerabilities; remaining issues tracked and planned
 
 ---
 
@@ -148,7 +154,8 @@ See `docs/AUTH_FIX.md` for detailed troubleshooting steps.
    - Approve or request changes
 
 ### Short-term (Optional)
-- Merge PR when auth is verified
+- **✅ DONE:** Local verification completed successfully
+- Merge PR (all checks passing)
 - Deploy to staging environment using DEPLOYMENT.md guide
 - Run full smoke test in staging
 
@@ -164,20 +171,22 @@ See `docs/AUTH_FIX.md` for detailed troubleshooting steps.
 
 ## 📋 Summary
 
-**Status:** ✅ Implementation complete, awaiting local auth verification
+**Status:** ✅ Implementation complete, **local auth verification PASSED**
 
 **What's Ready:**
 - ✅ Build system fixed and working
 - ✅ CI/CD configured and passing
 - ✅ Tests written and passing
 - ✅ Security vulnerabilities addressed
-- ✅ Migrations implemented
+- ✅ Migrations implemented and working
 - ✅ Deployment documented
-- ✅ Auth fix applied (code-level)
+- ✅ Auth fix applied and **verified working locally**
 
-**What's Pending:**
-- ⚠️ Local Docker verification of auth fix
-- ⚠️ Full smoke test with live database
+**What Was Verified:**
+- ✅ Full smoke test passed on Tim's Mac
+- ✅ Auth works: signup → login → create circle → drop pin
+- ✅ Migration tool fixed (ESM __dirname issue)
+- ✅ No critical vulnerabilities remain
 
 **Risk Level:** Low
 - Fix is straightforward (cookie configuration)
