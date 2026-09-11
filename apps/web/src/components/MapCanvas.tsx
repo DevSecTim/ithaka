@@ -30,8 +30,7 @@ export function MapCanvas({
       ref={mapRef}
       initialViewState={{ latitude: 20, longitude: 12, zoom: 1.7 }}
       mapStyle={style}
-      mapboxAccessToken={mapboxToken}
-      attributionControl
+      attributionControl={false}
       style={{ width: "100%", height: "100%" }}
       onClick={(event) => {
         if (event.features?.length) return;
